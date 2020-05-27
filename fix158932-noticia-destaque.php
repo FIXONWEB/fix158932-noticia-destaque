@@ -7,7 +7,7 @@
  * Author URI:      https://github.com/fixonweb
  * Text Domain:     fix158932
  * Domain Path:     /languages
- * Version:         1.0.2
+ * Version:         1.0.3
  *
  * @package         Fix158932
  */
@@ -40,13 +40,6 @@ function fix158932_noticia_destaque($atts, $content = null){
      //    	)
     	// )
 
-    	if($category){
-    		$args['tax_query'][] = array(
-    			'taxonomy'  => 'category',
-    			'field'     => 'slug',
-    			'terms'     => $category
-    		);
-    	}
 		// 'tax_query' => array(
   //       	array(
   //           	'taxonomy' => 'clientes',
@@ -55,6 +48,14 @@ function fix158932_noticia_destaque($atts, $content = null){
   //       	)
   //   	)
 	);
+
+	if($category){
+		$args['tax_query'][] = array(
+			'taxonomy'  => 'category',
+			'field'     => 'slug',
+			'terms'     => $category
+		);
+	}
 
 	$posts = get_posts( $args );
 
