@@ -7,7 +7,7 @@
  * Author URI:      https://github.com/fixonweb
  * Text Domain:     fix158932
  * Domain Path:     /languages
- * Version:         1.0.1
+ * Version:         1.0.2
  *
  * @package         Fix158932
  */
@@ -20,18 +20,33 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker('https://github.com/FIXONW
 add_shortcode("fix158932_noticia_destaque", "fix158932_noticia_destaque");
 function fix158932_noticia_destaque($atts, $content = null){
 
-	$post_type = 'post';
+	extract(shortcode_atts(array(
+		"post_type" => 'post',
+		"numberposts" => 1,
+		"category" => ''
+	), $atts));
+
+	// $post_type = 'post';
 	$args = array(
 		'numberposts' => 1,
 		'post_type'   => $post_type,
 		// 'category'    => 'destaque',
-    	'tax_query' => array(
-        	array(
-            	'taxonomy' => 'category',
-            	'field'    => 'slug',
-            	'terms'    => 'destaque'
-        	)
-    	)
+
+    	// 'tax_query' => array(
+     //    	array(
+     //        	'taxonomy' => 'category',
+     //        	'field'    => 'slug',
+     //        	'terms'    => 'destaque'
+     //    	)
+    	// )
+
+    	if($category){
+    		$args['tax_query'][] = array(
+    			'taxonomy'  => 'category',
+    			'field'     => 'slug',
+    			'terms'     => $category
+    		);
+    	}
 		// 'tax_query' => array(
   //       	array(
   //           	'taxonomy' => 'clientes',
